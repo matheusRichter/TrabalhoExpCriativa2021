@@ -8,8 +8,18 @@ function cadastrar(form){
     console.log(produtos);
 
     event.preventDefault();
+
+    window.location = "lista.html";
 }
 
 function mostrar(){
-    return produtos;
+
+    for(let x in produtos){
+        // document.getElementsByName("produto[]").innerHTML = x.Nome + "</br>" + x.Categoria;
+        alert(x.Nome);
+        console.log(produtos);
+    }
+    event.preventDefault();
+
+
 }
