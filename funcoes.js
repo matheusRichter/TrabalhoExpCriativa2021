@@ -62,9 +62,7 @@ function listarReposicoes() {
 
 function mostrarReposicoes() {
     listarReposicoes();
-    for (let i = 1; i < tableR.rows.length; i++) {
-        tableR.deleteRow(i);
-    }
+    limparReposicao();
     for (let i = 0; i < repor.length; i++) {
         const linha = tableR.insertRow(i+1);
         let c1 = linha.insertCell(0);
@@ -79,4 +77,11 @@ function mostrarReposicoes() {
     form.style.display = "none";
     gastos.style.display = "none";
     reposicao.style.display = "block";
+}
+
+function limparReposicao() {
+    let length = tableR.rows.length;
+    for (let i = 1; i < length; i++) {
+        tableR.deleteRow(1);
+    }
 }
