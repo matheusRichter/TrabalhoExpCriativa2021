@@ -42,7 +42,8 @@
             </div>
             <div class="col-md-4">
                 <!-- Button trigger modal previsão -->
-                <button type="button" class="btn btn-green mx-auto" data-toggle="modal" data-target="#modalCadastro">Visualizar gastos</button>
+                <button type="button" class="btn btn-green mx-auto" data-toggle="modal" data-target="#modalCadastro"
+                onclick="mostrarGasto()">Visualizar gastos</button>
             </div>
             <div class="col-md-4">
                 <!-- Button trigger modal comprar -->
@@ -65,22 +66,22 @@
                             <h1 id="modal-title">Cadastro de Produto</h1><br/>
                             <form id="form-cadastro">
                                 <label>Nome do produto: </label>
-                                <input type="text" id="nome" size="20" required><br/>
+                                <input type="text" id="nome" size="20" required value="Teste"><br/>
 
                                 <label>Categoria do produto: </label>
-                                <input type="text" id="categoria" size="20" required><br/>
+                                <input type="text" id="categoria" size="20" required value="Teste"><br/>
 
                                 <label>Marca do produto: </label>
-                                <input type="text" id="marca" size="20" required><br/>
+                                <input type="text" id="marca" size="20" required value="Teste"><br/>
 
                                 <label>Preço do produto: </label>
-                                <input type="number" step="0.01" id="preco" size="20" required><br/>
+                                <input type="number" step="0.01" id="preco" size="20" required value="10.5"><br/>
 
                                 <label>Validade do produto: </label>
-                                <input type="date" id="validade" size="20" required><br/>
+                                <input type="date" id="validade" size="20" required value="2021-05-29"><br/>
 
                                 <label>Quantidade do produto: </label>
-                                <input type="number" id="quantidade" size="20" required><br/>
+                                <input type="number" id="quantidade" size="20" required value="5"><br/>
 
                                 <hr>
 
@@ -88,7 +89,13 @@
                             </form>
                         </div>
                         <div id="gastos" style="display: none;">
-
+                            <div id="gastoTotal"></div>
+                            <hr style="size: 5px;">
+                            <div id="economia"></div>
+                            <hr>
+                            <div id="previsao"></div>
+                            <hr>
+                            <div id="econ-table" style="border-style: solid;"></div>
                         </div>
                         <div id="reposicao" style="display: none;">
                             <table class="table" id="reposition-table">
@@ -99,9 +106,6 @@
                                         <th>Quantidade</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                
-                                </tbody>
                             </table>
                         </div>
                     </div>

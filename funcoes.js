@@ -8,6 +8,10 @@ const gastos = document.getElementById('gastos');
 const reposicao = document.getElementById('reposicao');
 const tableR = document.getElementById('reposition-table');
 const modalTitle = document.getElementById('modal-title');
+const gastoTotal = document.getElementById('gastoTotal');
+const economia = document.getElementById('economia');
+const previsao = document.getElementById('previsao');
+const tableE = document.getElementById('econ-table');
 
 /*Funções de cadastro e exibição de produtos na tabela*/
 function mostrarFormCadastro() {
@@ -84,4 +88,60 @@ function limparReposicao() {
     for (let i = 1; i < length; i++) {
         tableR.deleteRow(1);
     }
+}
+
+/* Funçãoes de exibição de gastos e previsões */
+function calcularGasto() {
+    let total = 0;
+    for (let produto in produtos) {
+        total += parseFloat(produtos[produto].Preco) * parseInt(produtos[produto].Quantidade);
+    }
+    return total;
+}
+
+function mostrarGasto() {
+    modalTitle.innerText = 'Gastos e Previsões';
+    form.style.display = "none";
+    gastos.style.display = "block";
+    reposicao.style.display = "none";
+
+    let gasto = calcularGasto();
+    gastoTotal.innerText = gasto == undefined ? 'Você não possui histórico.' : 'Gasto total: R$' + gasto;
+
+    let valEcon = calcularEconomiaPrevisao(gasto);
+    economia.innerText = 'Valor de economia para a próxima compra: R$' + valEcon;
+
+    let prevGasto = calcularEconomiaPrevisao();
+    previsao.innerText = 'Valor previsto de gasto para a próxima compra: R$' + prevGasto;
+
+    let estoque = mostraEsoque()
+    let estoque2 = ''
+    for (let i = 0; i < estoque.length; i++) {
+        estoque2 += 'Nome: ' + estoque[i].Nome + ' ';
+        estoque2 += 'Validade: ' + estoque[i].validadeM + ' ';
+        estoque2 += 'Quantidade: ' + estoque[i].Quantidade;
+        estoque2 += '\n'
+    }
+    tableE.innerText = 'Você poderá ecnomizar com: \n' + estoque2
+}
+
+function calcularEconomiaPrevisao(gastoTotal = 0) {
+    listarReposicoes();
+    let valorEcon = 0;
+    for (let p in repor) {
+        console.log(repor[p])
+        valorEcon += parseFloat(repor[p].Preco) * parseInt(repor[p].Quantidade)
+    }
+    return Math.abs(gastoTotal - valorEcon)
+}
+
+function mostraEsoque() {
+    let estoque = []
+    listarReposicoes()
+    for (let p in produtos) {
+        if (!repor.includes(produtos[p])) {
+            estoque.push(produtos[p])
+        }
+    }
+    return estoque
 }

@@ -9,3 +9,7 @@
     background-color: #77d86a;
     border-color: #77d86a;
 }
+
+hr {
+    border-top-color: rgba(0, 0, 0, 0.3);
+}
