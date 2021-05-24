@@ -45,6 +45,16 @@ function addToTable(){
     c4.innerHTML = produtos[produtos.length-1].Preco;
     c5.innerHTML = produtos[produtos.length-1].Marca;
     contador++;
+
+    if ((Date.parse(produtos[produtos.length-1].validade) < Date.now()) && (produtos[produtos.length-1].Quantidade) <= 1) {
+        linha.style.backgroundColor = "rgba(228, 59, 59, 0.685)";
+    } else if ((Date.parse(produtos[produtos.length-1].validade) < Date.now())) {
+        linha.style.backgroundColor = "orange";
+    } else if ((produtos[produtos.length-1].Quantidade) <= 1) {
+        linha.style.backgroundColor = "yellow";
+    } else {
+        linha.style.backgroundColor = "";
+    }
 }
 
 form.addEventListener(
@@ -76,6 +86,16 @@ function mostrarReposicoes() {
         c1.innerHTML = repor[i].Nome;
         c2.innerHTML = repor[i].validadeM;
         c3.innerHTML = repor[i].Quantidade;
+
+        if ((Date.parse(repor[i].validade) < Date.now()) && (repor[i].Quantidade) <= 1) {
+            linha.style.backgroundColor = "rgba(228, 59, 59, 0.685)";
+        } else if ((Date.parse(repor[i].validade) < Date.now())) {
+            linha.style.backgroundColor = "orange";
+        } else if ((repor[i].Quantidade) <= 1) {
+            linha.style.backgroundColor = "yellow";
+        } else {
+            linha.style.backgroundColor = "";
+        }
     }
     modalTitle.innerText = 'Produtos a Repor';
     form.style.display = "none";
@@ -108,21 +128,24 @@ function mostrarGasto() {
     let gasto = calcularGasto();
     gastoTotal.innerText = gasto == undefined ? 'Você não possui histórico.' : 'Gasto total: R$' + gasto;
 
-    let valEcon = calcularEconomiaPrevisao(gasto);
-    economia.innerText = 'Valor de economia para a próxima compra: R$' + valEcon;
-
-    let prevGasto = calcularEconomiaPrevisao();
-    previsao.innerText = 'Valor previsto de gasto para a próxima compra: R$' + prevGasto;
-
     let estoque = mostraEsoque()
     let estoque2 = ''
     for (let i = 0; i < estoque.length; i++) {
-        estoque2 += 'Nome: ' + estoque[i].Nome + ' ';
-        estoque2 += 'Validade: ' + estoque[i].validadeM + ' ';
-        estoque2 += 'Quantidade: ' + estoque[i].Quantidade;
+        estoque2 += i+1 + ' - ';
+        estoque2 += 'Produto: ' + estoque[i].Nome + ' | ';
+        estoque2 += 'Validade: ' + estoque[i].validadeM + ' | ';
+        estoque2 += 'Estoque: ' + estoque[i].Quantidade;
         estoque2 += '\n'
     }
-    tableE.innerText = 'Você poderá ecnomizar com: \n' + estoque2
+    tableE.innerText = 'Produtos em estoque: \n' + estoque2;
+
+    let valEcon = calcularEconomiaPrevisao(gasto);
+    economia.innerText = 'Economia na próxima compra: R$' + valEcon;
+    economia.style.backgroundColor = "lightgreen";
+
+    let prevGasto = calcularEconomiaPrevisao();
+    previsao.innerText = 'Gasto na próxima compra: R$' + prevGasto;
+    previsao.style.backgroundColor = "orange";
 }
 
 function calcularEconomiaPrevisao(gastoTotal = 0) {

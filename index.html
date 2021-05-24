@@ -33,8 +33,11 @@
 
                 </tbody>
             </table>
+            <div style="border-style: solid;">
+                Legendas: <span style="background-color: rgba(228, 59, 59, 0.685);">Produto vencido e com baixa quantidade</span> | <span style="background-color: orange;">Produto vencido</span> | <span style="background-color: yellow;"> Produto com baixa quantidade</span>
+            </div>
         </div>
-
+        <br>
         <div class="row">
             <div class="col-md-4">
                 <!-- Button trigger modal cadastro -->
@@ -89,13 +92,13 @@
                             </form>
                         </div>
                         <div id="gastos" style="display: none;">
+                            <div id="econ-table" style="border-style: solid;"></div>
+                            <hr>
                             <div id="gastoTotal"></div>
                             <hr style="size: 5px;">
                             <div id="economia"></div>
                             <hr>
                             <div id="previsao"></div>
-                            <hr>
-                            <div id="econ-table" style="border-style: solid;"></div>
                         </div>
                         <div id="reposicao" style="display: none;">
                             <table class="table" id="reposition-table">
