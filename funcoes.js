@@ -2,6 +2,9 @@
 let produtos = [];
 let repor = [];
 let contador = 1;
+let vencidos = 0;
+let baixoEstoque = 0;
+let pouco_e_vencido = 0;
 const form = document.getElementById('form-cadastro');
 const table = document.getElementById('content-table');
 const gastos = document.getElementById('gastos');
@@ -12,6 +15,11 @@ const gastoTotal = document.getElementById('gastoTotal');
 const economia = document.getElementById('economia');
 const previsao = document.getElementById('previsao');
 const tableE = document.getElementById('econ-table');
+const dashVencidos = document.getElementById('vencidos');
+const dashFalta = document.getElementById('emFalta');
+const dashFaltaVencido = document.getElementById('vencidosBaixoEstoque');
+const dashboard = document.getElementById('dashboard');
+const detailTable = document.getElementById('detail-table');
 
 /*Funções de cadastro e exibição de produtos na tabela*/
 function mostrarFormCadastro() {
@@ -19,6 +27,7 @@ function mostrarFormCadastro() {
     form.style.display = 'block';
     gastos.style.display = 'none';
     reposicao.style.display = 'none';
+    dashboard.style.display = 'none';
 }
 
 function cadastrar(form){
@@ -70,6 +79,9 @@ function listarReposicoes() {
     produtos.forEach(element => {
         if ((Date.parse(element.validade) < Date.now() || element.Quantidade <= 1) && !repor.includes(element)) {
             repor.push(element);
+            if (Date.parse(element.validade) < Date.now()) vencidos++;
+            if (element.Quantidade <= 1) baixoEstoque++;
+            if (Date.parse(element.validade) < Date.now() && element.Quantidade <= 1) pouco_e_vencido++;
         }
     });
 }
@@ -101,6 +113,7 @@ function mostrarReposicoes() {
     form.style.display = "none";
     gastos.style.display = "none";
     reposicao.style.display = "block";
+    dashboard.style.display = 'none';
 }
 
 function limparReposicao() {
@@ -124,6 +137,7 @@ function mostrarGasto() {
     form.style.display = "none";
     gastos.style.display = "block";
     reposicao.style.display = "none";
+    dashboard.style.display = 'none';
 
     let gasto = calcularGasto();
     gastoTotal.innerText = gasto == undefined ? 'Você não possui histórico.' : 'Gasto total: R$' + gasto;
@@ -152,10 +166,9 @@ function calcularEconomiaPrevisao(gastoTotal = 0) {
     listarReposicoes();
     let valorEcon = 0;
     for (let p in repor) {
-        console.log(repor[p])
         valorEcon += parseFloat(repor[p].Preco) * parseInt(repor[p].Quantidade)
     }
-    return Math.abs(gastoTotal - valorEcon)
+    return Math.abs(gastoTotal - valorEcon).toFixed(2);
 }
 
 function mostraEsoque() {
@@ -167,4 +180,61 @@ function mostraEsoque() {
         }
     }
     return estoque
+}
+
+/*Funções de exibição do dashboard*/
+function mostrarDash() {
+    modalTitle.innerText = 'Dashboard';
+    form.style.display = "none";
+    gastos.style.display = "none";
+    reposicao.style.display = "none";
+    dashboard.style.display = 'block';
+
+    listarReposicoes();
+
+    dashFalta.innerText = 'Baixo estoque: \n' + baixoEstoque;
+    dashVencidos.innerText = 'Vencidos: \n' + vencidos;
+    dashFaltaVencido.innerText = 'Vencidos e com Baixo estoque: \n' + pouco_e_vencido;
+}
+
+function listarCategoria(id) {
+    listarReposicoes();
+    limparCategoria();
+    for (let i = 0; i < repor.length; i++) {
+        const linha = detailTable.insertRow(i+1);
+        let c1 = linha.insertCell(0);
+        let c2 = linha.insertCell(1);
+        let c3 = linha.insertCell(2);
+
+        switch(id) {
+            case 1:
+                if (Date.parse(repor[i].validade) < Date.now()){
+                    c1.innerHTML = repor[i].Nome;
+                    c2.innerHTML = repor[i].validadeM;
+                    c3.innerHTML = repor[i].Quantidade;
+                }
+            break;
+            case 2:
+                if (repor[i].Quantidade <= 1){
+                    c1.innerHTML = repor[i].Nome;
+                    c2.innerHTML = repor[i].validadeM;
+                    c3.innerHTML = repor[i].Quantidade;
+                }
+            break;
+            case 3:
+                if (repor[i].Quantidade <= 1 && Date.parse(repor[i].validade) < Date.now()){
+                    c1.innerHTML = repor[i].Nome;
+                    c2.innerHTML = repor[i].validadeM;
+                    c3.innerHTML = repor[i].Quantidade;
+                }
+            break;
+        }
+    }
+}
+
+function limparCategoria() {
+    let length = detailTable.rows.length;
+    for (let i = 1; i < length; i++) {
+        detailTable.deleteRow(1);
+    }
 }

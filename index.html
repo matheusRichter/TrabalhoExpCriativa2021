@@ -11,9 +11,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <!--    <script src="aulas.js"></script>-->
         <link rel="stylesheet" href="style.css">
-
-
     </head>
+
     <body style="text-align: center;">
     <h1>Informações dos Produtos</h1>
     <hr>
@@ -34,23 +33,27 @@
                 </tbody>
             </table>
             <div style="border-style: solid;">
-                Legendas: <span style="background-color: rgba(228, 59, 59, 0.685);">Produto vencido e com baixa quantidade</span> | <span style="background-color: orange;">Produto vencido</span> | <span style="background-color: yellow;"> Produto com baixa quantidade</span>
+                Legendas: <span style="background-color: rgba(228, 59, 59, 0.685);">Produto vencido e com baixo estoque</span> | <span style="background-color: orange;">Produto vencido</span> | <span style="background-color: yellow;"> Produto com baixa quantidade</span>
             </div>
         </div>
         <br>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <!-- Button trigger modal cadastro -->
                 <button type="button" class="btn btn-red mx-auto" data-toggle="modal" data-target="#modalCadastro" onclick="mostrarFormCadastro()">Cadastrar novo produto</button>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <!-- Button trigger modal previsão -->
                 <button type="button" class="btn btn-green mx-auto" data-toggle="modal" data-target="#modalCadastro"
                 onclick="mostrarGasto()">Visualizar gastos</button>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <!-- Button trigger modal comprar -->
                 <button type="button" class="btn btn-primary mx-auto" data-toggle="modal" data-target="#modalCadastro" onclick="mostrarReposicoes()">Itens a repor</button>
+            </div>
+            <div class="col-md-3">
+                <!-- Button trigger modal dashboard -->
+                <button type="button" class="btn mx-auto" data-toggle="modal" data-target="#modalCadastro" onclick="mostrarDash();" style="background-color: tomato; color: white;">Dashboard</button>
             </div>
         </div>
 
@@ -90,6 +93,27 @@
 
                                 <input type="submit" class="btn btn-primary" value="Salvar Produto">
                             </form>
+                        </div>
+                        <div id="dashboard" style="display: none;">
+                            <div class="dash" id="vencidos" style="background-color: orange;" onclick="listarCategoria(1)">
+                                Vencidos: <br>
+                            </div>
+                            <div class="dash" id="emFalta" style="background-color: yellow;" onclick="listarCategoria(2)">
+                                Baixo estoque: <br>
+                            </div>
+                            <div class="dash" id="vencidosBaixoEstoque" style="background-color: rgba(228, 59, 59, 0.685);" onclick="listarCategoria(3)">
+                                Vencidos e Baixo estoque: <br>
+                            </div>
+
+                            <table class="table" id="detail-table">
+                                <thead class="thead-dark">
+                                    <tr class="table-header">
+                                        <th>Nome</th>
+                                        <th>Validade</th>
+                                        <th>Quantidade</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
                         <div id="gastos" style="display: none;">
                             <div id="econ-table" style="border-style: solid;"></div>
