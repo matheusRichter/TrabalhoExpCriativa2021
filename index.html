@@ -13,29 +13,29 @@
         <link rel="stylesheet" href="style.css">
     </head>
 
-    <body style="text-align: center;">
+    <body style="text-align: center;" onload="mostrarGasto();mostrarDash();">
     <h1>Informações dos Produtos</h1>
     <hr>
     <div class="container-md" style="margin-left: auto; margin-right: auto; width: 90%;">
-        <div class="table-area" style="align-items: center;">
-            <table class="table" id="content-table">
-                <thead class="thead-dark">
-                    <tr class="table-header">
-                        <th>Nome</th>
-                        <th>Validade</th>
-                        <th>Quantidade</th>
-                        <th>Preço Unitário</th>
-                        <th>Marca</th>
-                    </tr>
-                </thead>
-                <tbody id="corpo-tabela">
-
-                </tbody>
-            </table>
-            <div style="border-style: solid;">
-                Legendas: <span style="background-color: rgba(228, 59, 59, 0.685);">Produto vencido e com baixo estoque</span> | <span style="background-color: orange;">Produto vencido</span> | <span style="background-color: yellow;"> Produto com baixa quantidade</span>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="dash" id="vencidos" data-toggle="modal" data-target="#modalCadastro" style="background-color: orange;" onclick="listarCategoria(1)">
+                    Vencidos: <br>
+                </div>
+                <div class="dash" id="emFalta" data-toggle="modal" data-target="#modalCadastro" style="background-color: yellow;" onclick="listarCategoria(2)">
+                    Baixo estoque: <br>
+                </div>
+                <div class="dash" data-toggle="modal" data-target="#modalCadastro" id="vencidosBaixoEstoque" style="background-color: rgba(228, 59, 59, 0.685);" onclick="listarCategoria(3)">
+                    Vencidos e Baixo estoque: <br>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="gastoTotal" class="dash" style="background-color: rgba(251, 255, 0, 0.87);">Gasto Total: R$ </div>
+                <div id="economia" class="dash" style="background-color: rgba(126, 247, 132, 0.699);"> Economia na próxima compra: R$ </div>
+                <div id="previsao" class="dash" style="background-color: rgb(97, 175, 248);"> Gasto para próxima compra: R$ </div>
             </div>
         </div>
+
         <br>
         <div class="row">
             <div class="col-md-3">
@@ -44,16 +44,16 @@
             </div>
             <div class="col-md-3">
                 <!-- Button trigger modal previsão -->
-                <button type="button" class="btn btn-green mx-auto" data-toggle="modal" data-target="#modalCadastro"
-                onclick="mostrarGasto()">Visualizar gastos</button>
+                <button type="button" class="btn btn-green mx-auto" data-toggle="modal" data-target="#modalCadastro" onclick="mostrarEstoque()"
+                >Estoque</button>
             </div>
             <div class="col-md-3">
                 <!-- Button trigger modal comprar -->
-                <button type="button" class="btn btn-primary mx-auto" data-toggle="modal" data-target="#modalCadastro" onclick="mostrarReposicoes()">Itens a repor</button>
+                <button type="button" class="btn btn-primary mx-auto" data-toggle="modal" data-target="#modalCadastro" onclick="mostrarReposicoes()">Lista de compras</button>
             </div>
             <div class="col-md-3">
                 <!-- Button trigger modal dashboard -->
-                <button type="button" class="btn mx-auto" data-toggle="modal" data-target="#modalCadastro" onclick="mostrarDash();" style="background-color: tomato; color: white;">Dashboard</button>
+                <button type="button" class="btn mx-auto" data-toggle="modal" data-target="#modalCadastro" style="background-color: tomato; color: white;" onclick="mostrarProdutos()">Produtos</button>
             </div>
         </div>
 
@@ -95,17 +95,28 @@
                             </form>
                         </div>
                         <div id="dashboard" style="display: none;">
-                            <div class="dash" id="vencidos" style="background-color: orange;" onclick="listarCategoria(1)">
-                                Vencidos: <br>
+                            <div class="table-area" style="align-items: center;">
+                                <table class="table" id="content-table">
+                                    <thead class="thead-dark">
+                                        <tr class="table-header">
+                                            <th>Nome</th>
+                                            <th>Validade</th>
+                                            <th>Quantidade</th>
+                                            <th>Preço Unitário</th>
+                                            <th>Marca</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div style="border-style: solid;">
+                                    Legendas: <span style="background-color: rgba(228, 59, 59, 0.685);">Produto vencido e com baixo estoque</span> | <span style="background-color: orange;">Produto vencido</span> | <span style="background-color: yellow;"> Produto com baixa quantidade</span>
+                                </div>
                             </div>
-                            <div class="dash" id="emFalta" style="background-color: yellow;" onclick="listarCategoria(2)">
-                                Baixo estoque: <br>
-                            </div>
-                            <div class="dash" id="vencidosBaixoEstoque" style="background-color: rgba(228, 59, 59, 0.685);" onclick="listarCategoria(3)">
-                                Vencidos e Baixo estoque: <br>
-                            </div>
-
-                            <table class="table" id="detail-table">
+                        </div>
+                        <div id="gastos" style="display: none;">
+                            <div id="econ-table" style="border-style: solid;"></div>
+                        </div>
+                        <div id="reposicao" style="display: none;">
+                            <table class="table" id="reposition-table">
                                 <thead class="thead-dark">
                                     <tr class="table-header">
                                         <th>Nome</th>
@@ -115,17 +126,8 @@
                                 </thead>
                             </table>
                         </div>
-                        <div id="gastos" style="display: none;">
-                            <div id="econ-table" style="border-style: solid;"></div>
-                            <hr>
-                            <div id="gastoTotal"></div>
-                            <hr style="size: 5px;">
-                            <div id="economia"></div>
-                            <hr>
-                            <div id="previsao"></div>
-                        </div>
-                        <div id="reposicao" style="display: none;">
-                            <table class="table" id="reposition-table">
+                        <div id="categorias" style="display: none;">
+                            <table class="table" id="detail-table">
                                 <thead class="thead-dark">
                                     <tr class="table-header">
                                         <th>Nome</th>

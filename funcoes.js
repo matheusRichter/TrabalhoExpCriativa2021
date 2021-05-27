@@ -20,6 +20,7 @@ const dashFalta = document.getElementById('emFalta');
 const dashFaltaVencido = document.getElementById('vencidosBaixoEstoque');
 const dashboard = document.getElementById('dashboard');
 const detailTable = document.getElementById('detail-table');
+const categorias = document.getElementById('categorias');
 
 /*Funções de cadastro e exibição de produtos na tabela*/
 function mostrarFormCadastro() {
@@ -28,6 +29,7 @@ function mostrarFormCadastro() {
     gastos.style.display = 'none';
     reposicao.style.display = 'none';
     dashboard.style.display = 'none';
+    categorias.style.display = 'none';
 }
 
 function cadastrar(form){
@@ -37,6 +39,8 @@ function cadastrar(form){
     produtos.push({"Nome":form.nome.value, "Categoria":form.categoria.value, "Marca":form.marca.value, "Preco":form.preco.value, "validadeM":dataVal, validade:form.validade.value ,"Quantidade":form.quantidade.value});
 
     addToTable();
+
+    alert("Produto Cadastrado com Sucesso!\nProduto: " + form.nome.value);
 }
 
 function addToTable(){
@@ -64,12 +68,16 @@ function addToTable(){
     } else {
         linha.style.backgroundColor = "";
     }
+
+    mostrarGasto();
+    
 }
 
 form.addEventListener(
     "submit",
     function(event) {
         cadastrar(form);
+        atualizarDash();
         event.preventDefault();
     }
 );
@@ -114,6 +122,7 @@ function mostrarReposicoes() {
     gastos.style.display = "none";
     reposicao.style.display = "block";
     dashboard.style.display = 'none';
+    categorias.style.display = 'none';
 }
 
 function limparReposicao() {
@@ -132,33 +141,25 @@ function calcularGasto() {
     return total;
 }
 
-function mostrarGasto() {
-    modalTitle.innerText = 'Gastos e Previsões';
-    form.style.display = "none";
-    gastos.style.display = "block";
-    reposicao.style.display = "none";
-    dashboard.style.display = 'none';
+function mostrarGasto(mostrar=0) {
+    if (mostrar == 1) {
+        modalTitle.innerText = 'Gastos e Previsões';
+        form.style.display = "none";
+        gastos.style.display = "block";
+        reposicao.style.display = "none";
+        dashboard.style.display = 'none';
+        categorias.style.display = 'none';
+    }
 
     let gasto = calcularGasto();
-    gastoTotal.innerText = gasto == undefined ? 'Você não possui histórico.' : 'Gasto total: R$' + gasto;
-
-    let estoque = mostraEsoque()
-    let estoque2 = ''
-    for (let i = 0; i < estoque.length; i++) {
-        estoque2 += i+1 + ' - ';
-        estoque2 += 'Produto: ' + estoque[i].Nome + ' | ';
-        estoque2 += 'Validade: ' + estoque[i].validadeM + ' | ';
-        estoque2 += 'Estoque: ' + estoque[i].Quantidade;
-        estoque2 += '\n'
-    }
-    tableE.innerText = 'Produtos em estoque: \n' + estoque2;
+    gastoTotal.innerText = gasto == undefined ? 'Você não possui histórico.' : 'Gasto total:\nR$' + gasto;
 
     let valEcon = calcularEconomiaPrevisao(gasto);
-    economia.innerText = 'Economia na próxima compra: R$' + valEcon;
+    economia.innerText = 'Economia na próxima compra:\nR$' + valEcon;
     economia.style.backgroundColor = "lightgreen";
 
     let prevGasto = calcularEconomiaPrevisao();
-    previsao.innerText = 'Gasto na próxima compra: R$' + prevGasto;
+    previsao.innerText = 'Gasto na próxima compra:\nR$' + prevGasto;
     previsao.style.backgroundColor = "orange";
 }
 
@@ -184,12 +185,17 @@ function mostraEsoque() {
 
 /*Funções de exibição do dashboard*/
 function mostrarDash() {
-    modalTitle.innerText = 'Dashboard';
+    modalTitle.innerText = 'Produtos';
     form.style.display = "none";
     gastos.style.display = "none";
     reposicao.style.display = "none";
     dashboard.style.display = 'block';
+    categorias.style.display = 'none';
+    
+    atualizarDash();
+}
 
+function atualizarDash(){
     listarReposicoes();
 
     dashFalta.innerText = 'Baixo estoque: \n' + baixoEstoque;
@@ -200,6 +206,19 @@ function mostrarDash() {
 function listarCategoria(id) {
     listarReposicoes();
     limparCategoria();
+
+    if (repor.length <= 0) {
+        modalTitle.innerText = 'Não há produtos dessa categoria';
+
+        form.style.display = 'none';
+        gastos.style.display = 'none';
+        reposicao.style.display = 'none';
+        dashboard.style.display = 'none';
+        categorias.style.display = 'none';
+
+        return false;
+    }
+    
     for (let i = 0; i < repor.length; i++) {
         const linha = detailTable.insertRow(i+1);
         let c1 = linha.insertCell(0);
@@ -208,6 +227,7 @@ function listarCategoria(id) {
 
         switch(id) {
             case 1:
+                modalTitle.innerText = 'Vencidos';
                 if (Date.parse(repor[i].validade) < Date.now()){
                     c1.innerHTML = repor[i].Nome;
                     c2.innerHTML = repor[i].validadeM;
@@ -215,6 +235,7 @@ function listarCategoria(id) {
                 }
             break;
             case 2:
+                modalTitle.innerText = 'Baixo estoque';
                 if (repor[i].Quantidade <= 1){
                     c1.innerHTML = repor[i].Nome;
                     c2.innerHTML = repor[i].validadeM;
@@ -222,6 +243,7 @@ function listarCategoria(id) {
                 }
             break;
             case 3:
+                modalTitle.innerText = 'Vencidos e Baixo estoque';
                 if (repor[i].Quantidade <= 1 && Date.parse(repor[i].validade) < Date.now()){
                     c1.innerHTML = repor[i].Nome;
                     c2.innerHTML = repor[i].validadeM;
@@ -230,6 +252,12 @@ function listarCategoria(id) {
             break;
         }
     }
+    
+    form.style.display = 'none';
+    gastos.style.display = 'none';
+    reposicao.style.display = 'none';
+    dashboard.style.display = 'none';
+    categorias.style.display = 'block';
 }
 
 function limparCategoria() {
@@ -237,4 +265,35 @@ function limparCategoria() {
     for (let i = 1; i < length; i++) {
         detailTable.deleteRow(1);
     }
+}
+
+/* Função para mostrar estoque no modal */
+function mostrarEstoque() {
+    modalTitle.innerText = 'Estoque';
+    form.style.display = 'none';
+    gastos.style.display = 'block';
+    reposicao.style.display = 'none';
+    dashboard.style.display = 'none';
+    categorias.style.display = 'none';
+
+    let estoque = mostraEsoque()
+    let estoque2 = ''
+    for (let i = 0; i < estoque.length; i++) {
+        estoque2 += i+1 + ' - ';
+        estoque2 += 'Produto: ' + estoque[i].Nome + ' | ';
+        estoque2 += 'Validade: ' + estoque[i].validadeM + ' | ';
+        estoque2 += 'Estoque: ' + estoque[i].Quantidade;
+        estoque2 += '\n'
+    }
+    tableE.innerText = 'Produtos em estoque:\n' + estoque2;
+}
+
+/* Função para mostrar produtos */
+function mostrarProdutos() {
+    modalTitle.innerText = 'Produtos';
+    form.style.display = 'none';
+    gastos.style.display = 'none';
+    reposicao.style.display = 'none';
+    dashboard.style.display = 'block';
+    categorias.style.display = 'none';
 }
