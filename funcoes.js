@@ -21,6 +21,8 @@ const dashFaltaVencido = document.getElementById('vencidosBaixoEstoque');
 const dashboard = document.getElementById('dashboard');
 const detailTable = document.getElementById('detail-table');
 const categorias = document.getElementById('categorias');
+const valores = document.getElementById('valores');
+const valor = document.getElementById('valor');
 
 /*Funções de cadastro e exibição de produtos na tabela*/
 function mostrarFormCadastro() {
@@ -30,6 +32,7 @@ function mostrarFormCadastro() {
     reposicao.style.display = 'none';
     dashboard.style.display = 'none';
     categorias.style.display = 'none';
+    valores.style.display = 'none';
 }
 
 function cadastrar(form){
@@ -123,6 +126,7 @@ function mostrarReposicoes() {
     reposicao.style.display = "block";
     dashboard.style.display = 'none';
     categorias.style.display = 'none';
+    valores.style.display = 'none';
 }
 
 function limparReposicao() {
@@ -149,6 +153,7 @@ function mostrarGasto(mostrar=0) {
         reposicao.style.display = "none";
         dashboard.style.display = 'none';
         categorias.style.display = 'none';
+        valores.style.display = 'none';
     }
 
     let gasto = calcularGasto();
@@ -189,8 +194,33 @@ function mostrarDash() {
     reposicao.style.display = "none";
     dashboard.style.display = 'block';
     categorias.style.display = 'none';
+    valores.style.display = 'none';
     
-    atualizarDash();
+    //atualizarDash();
+}
+
+function mostrarValor(id) {
+    form.style.display = "none";
+    gastos.style.display = "none";
+    reposicao.style.display = "none";
+    dashboard.style.display = 'none';
+    categorias.style.display = 'none';
+    valores.style.display = 'block';
+    let gasto = calcularGasto();
+    switch(id) {
+        case 1:
+            modalTitle.innerText = "Gasto total com o estoqe";
+            valor.innerText = "R$ " + gasto;
+        break;
+        case 2:
+            modalTitle.innerText = "Economia na próxima compra";
+            valor.innerText = "R$ " + calcularEconomiaPrevisao(gasto);
+        break;
+        case 3:
+            modalTitle.innerText = "Gasto na próxima compra";
+            valor.innerText = "R$ " + calcularGasto();
+        break;
+    }
 }
 
 function atualizarDash(){
@@ -213,6 +243,7 @@ function listarCategoria(id) {
         reposicao.style.display = 'none';
         dashboard.style.display = 'none';
         categorias.style.display = 'none';
+        valores.style.display = 'none';
 
         return false;
     }
@@ -256,10 +287,7 @@ function listarCategoria(id) {
     reposicao.style.display = 'none';
     dashboard.style.display = 'none';
     categorias.style.display = 'block';
-}
-
-function mostrarValor(id) {
-
+    valores.style.display = 'none';
 }
 
 function limparCategoria() {
@@ -277,6 +305,7 @@ function mostrarEstoque() {
     reposicao.style.display = 'none';
     dashboard.style.display = 'none';
     categorias.style.display = 'none';
+    valores.style.display = 'none';
 
     let estoque = mostraEsoque()
     let estoque2 = ''
@@ -298,4 +327,5 @@ function mostrarProdutos() {
     reposicao.style.display = 'none';
     dashboard.style.display = 'block';
     categorias.style.display = 'none';
+    valores.style.display = 'none';
 }

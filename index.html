@@ -19,15 +19,16 @@
     <div class="container-md" style="margin-left: auto; margin-right: auto; width: 90%;">
         <div class="row area">
             <div class="col-md-3 side-bar">
-                <div id="vencidos" onclick="listarCategoria(1)" class="side-button">Produtos Vencidos</div>
-                <div id="emFalta" onclick="listarCategoria(2)" class="side-button">Produtos com caixo estoque</div>
-                <div id="vencidosBaixoEstoque" onclick="listarCategoria(3)" class="side-button">Produtos vencidos e com baixo estoque</div>
-                <div id="gastoTotal" class="side-button" onclick="mostrarValor(1);">Gasto Total</div>
-                <div id="economia" class="side-button" onclick="mostrarValor(2);"> Economia na próxima compra</div>
-                <div id="previsao" class="side-button" onclick="mostrarValor(3);"> Gasto para próxima compra</div>
-                <div onclick="mostrarFormCadastro()" class="side-button">Cadastrar novo produto</div>
-                <div onclick="mostrarEstoque()" class="side-button">Produtos em Estoque</div>
-                <div onclick="mostrarReposicoes()" class="side-button">Lista de compras</div>
+                <br>
+                <div id="vencidos" onclick="listarCategoria(1)" class="side-button">Produtos Vencidos</div><br>
+                <div id="emFalta" onclick="listarCategoria(2)" class="side-button">Produtos com caixo estoque</div><br>
+                <div id="vencidosBaixoEstoque" onclick="listarCategoria(3)" class="side-button">Produtos vencidos e com baixo estoque</div><br>
+                <div id="gastoTotal" class="side-button" onclick="mostrarValor(1);">Gasto Total</div><br>
+                <div id="economia" class="side-button" onclick="mostrarValor(2);"> Economia na próxima compra</div><br>
+                <div id="previsao" class="side-button" onclick="mostrarValor(3);"> Gasto para próxima compra</div><br>
+                <div onclick="mostrarFormCadastro()" class="side-button">Cadastrar novo produto</div><br>
+                <div onclick="mostrarEstoque()" class="side-button">Produtos em Estoque</div><br>
+                <div onclick="mostrarReposicoes()" class="side-button">Lista de compras</div><br>
                 <div onclick="mostrarProdutos()" class="side-button">Todos os Produtos</div>
             </div>
 
@@ -78,6 +79,9 @@
                 </div>
                 <div id="gastos" style="display: none;">
                     <div id="econ-table" style="border-style: solid;"></div>
+                </div>
+                <div id="valores" style="display: none;">
+                    <h2 id="valor"></h2>
                 </div>
                 <div id="reposicao" style="display: none;">
                     <table class="table" id="reposition-table">
