@@ -24,3 +24,65 @@ hr {
 .dash:hover {
     cursor: pointer;
 }
+
+.side-bar {
+    background-color: darkgray;
+    color: white;
+}
+
+.display {
+    background-color: white;
+    border-style: solid;
+
+    min-height: 500px;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.side-button:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.area {
+    min-height: 500px;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.area::-webkit-scrollbar {
+    display: none;
+}
+
+/*css tela de login*/
+.container-login {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+
+    border-style: solid;
+    border-radius: 5px;
+
+    width: 50%;
+
+    text-align: center;
+}
+
+.logo {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*css tela inicial*/
+.topo {
+    background-color: rgba(59, 119, 106, 0.692);
+    color: white;
+    min-width: 100%; 
+    max-width: 100%;
+}
+
+.propaganda {
+    background-image: 'images/Apresentação.png';
+}

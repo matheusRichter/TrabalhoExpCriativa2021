@@ -13,135 +13,96 @@
         <link rel="stylesheet" href="style.css">
     </head>
 
-    <body style="text-align: center;" onload="mostrarGasto();mostrarDash();">
+    <body style="text-align: center;">
     <h1>Informações dos Produtos</h1>
     <hr>
     <div class="container-md" style="margin-left: auto; margin-right: auto; width: 90%;">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="dash" id="vencidos" data-toggle="modal" data-target="#modalCadastro" style="background-color: orange;" onclick="listarCategoria(1)">
-                    Vencidos: <br>
+        <div class="row area">
+            <div class="col-md-3 side-bar">
+                <div id="vencidos" onclick="listarCategoria(1)" class="side-button">Produtos Vencidos</div>
+                <div id="emFalta" onclick="listarCategoria(2)" class="side-button">Produtos com caixo estoque</div>
+                <div id="vencidosBaixoEstoque" onclick="listarCategoria(3)" class="side-button">Produtos vencidos e com baixo estoque</div>
+                <div id="gastoTotal" class="side-button" onclick="mostrarValor(1);">Gasto Total</div>
+                <div id="economia" class="side-button" onclick="mostrarValor(2);"> Economia na próxima compra</div>
+                <div id="previsao" class="side-button" onclick="mostrarValor(3);"> Gasto para próxima compra</div>
+                <div onclick="mostrarFormCadastro()" class="side-button">Cadastrar novo produto</div>
+                <div onclick="mostrarEstoque()" class="side-button">Produtos em Estoque</div>
+                <div onclick="mostrarReposicoes()" class="side-button">Lista de compras</div>
+                <div onclick="mostrarProdutos()" class="side-button">Todos os Produtos</div>
+            </div>
+
+            <div class="col-md-9 display">
+                <div id="cadastro">
+                    <h1 id="modal-title">Cadastro de Produto</h1><br/>
+                    <form id="form-cadastro">
+                        <label>Nome do produto: </label>
+                        <input type="text" id="nome" size="20" required value="Teste"><br/>
+    
+                        <label>Categoria do produto: </label>
+                        <input type="text" id="categoria" size="20" required value="Teste"><br/>
+    
+                        <label>Marca do produto: </label>
+                        <input type="text" id="marca" size="20" required value="Teste"><br/>
+    
+                        <label>Preço do produto: </label>
+                        <input type="number" step="0.01" id="preco" size="20" required value="10.5"><br/>
+    
+                        <label>Validade do produto: </label>
+                        <input type="date" id="validade" size="20" required value="2021-05-29"><br/>
+    
+                        <label>Quantidade do produto: </label>
+                        <input type="number" id="quantidade" size="20" required value="5"><br/>
+    
+                        <hr>
+    
+                        <input type="submit" class="btn btn-primary" value="Salvar Produto">
+                    </form>
                 </div>
-                <div class="dash" id="emFalta" data-toggle="modal" data-target="#modalCadastro" style="background-color: yellow;" onclick="listarCategoria(2)">
-                    Baixo estoque: <br>
-                </div>
-                <div class="dash" data-toggle="modal" data-target="#modalCadastro" id="vencidosBaixoEstoque" style="background-color: rgba(228, 59, 59, 0.685);" onclick="listarCategoria(3)">
-                    Vencidos e Baixo estoque: <br>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div id="gastoTotal" class="dash" style="background-color: rgba(251, 255, 0, 0.87);">Gasto Total: R$ </div>
-                <div id="economia" class="dash" style="background-color: rgba(126, 247, 132, 0.699);"> Economia na próxima compra: R$ </div>
-                <div id="previsao" class="dash" style="background-color: rgb(97, 175, 248);"> Gasto para próxima compra: R$ </div>
-            </div>
-        </div>
-
-        <br>
-        <div class="row">
-            <div class="col-md-3">
-                <!-- Button trigger modal cadastro -->
-                <button type="button" class="btn btn-red mx-auto" data-toggle="modal" data-target="#modalCadastro" onclick="mostrarFormCadastro()">Cadastrar novo produto</button>
-            </div>
-            <div class="col-md-3">
-                <!-- Button trigger modal previsão -->
-                <button type="button" class="btn btn-green mx-auto" data-toggle="modal" data-target="#modalCadastro" onclick="mostrarEstoque()"
-                >Estoque</button>
-            </div>
-            <div class="col-md-3">
-                <!-- Button trigger modal comprar -->
-                <button type="button" class="btn btn-primary mx-auto" data-toggle="modal" data-target="#modalCadastro" onclick="mostrarReposicoes()">Lista de compras</button>
-            </div>
-            <div class="col-md-3">
-                <!-- Button trigger modal dashboard -->
-                <button type="button" class="btn mx-auto" data-toggle="modal" data-target="#modalCadastro" style="background-color: tomato; color: white;" onclick="mostrarProdutos()">Produtos</button>
-            </div>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="modalCadastro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="cadastro" >
-                            <h1 id="modal-title">Cadastro de Produto</h1><br/>
-                            <form id="form-cadastro">
-                                <label>Nome do produto: </label>
-                                <input type="text" id="nome" size="20" required value="Teste"><br/>
-
-                                <label>Categoria do produto: </label>
-                                <input type="text" id="categoria" size="20" required value="Teste"><br/>
-
-                                <label>Marca do produto: </label>
-                                <input type="text" id="marca" size="20" required value="Teste"><br/>
-
-                                <label>Preço do produto: </label>
-                                <input type="number" step="0.01" id="preco" size="20" required value="10.5"><br/>
-
-                                <label>Validade do produto: </label>
-                                <input type="date" id="validade" size="20" required value="2021-05-29"><br/>
-
-                                <label>Quantidade do produto: </label>
-                                <input type="number" id="quantidade" size="20" required value="5"><br/>
-
-                                <hr>
-
-                                <input type="submit" class="btn btn-primary" value="Salvar Produto">
-                            </form>
-                        </div>
-                        <div id="dashboard" style="display: none;">
-                            <div class="table-area" style="align-items: center;">
-                                <table class="table" id="content-table">
-                                    <thead class="thead-dark">
-                                        <tr class="table-header">
-                                            <th>Nome</th>
-                                            <th>Validade</th>
-                                            <th>Quantidade</th>
-                                            <th>Preço Unitário</th>
-                                            <th>Marca</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                                <div style="border-style: solid;">
-                                    Legendas: <span style="background-color: rgba(228, 59, 59, 0.685);">Produto vencido e com baixo estoque</span> | <span style="background-color: orange;">Produto vencido</span> | <span style="background-color: yellow;"> Produto com baixa quantidade</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="gastos" style="display: none;">
-                            <div id="econ-table" style="border-style: solid;"></div>
-                        </div>
-                        <div id="reposicao" style="display: none;">
-                            <table class="table" id="reposition-table">
-                                <thead class="thead-dark">
-                                    <tr class="table-header">
-                                        <th>Nome</th>
-                                        <th>Validade</th>
-                                        <th>Quantidade</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div id="categorias" style="display: none;">
-                            <table class="table" id="detail-table">
-                                <thead class="thead-dark">
-                                    <tr class="table-header">
-                                        <th>Nome</th>
-                                        <th>Validade</th>
-                                        <th>Quantidade</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                <div id="dashboard" style="display: none;">
+                    <div class="table-area" style="align-items: center;">
+                        <table class="table" id="content-table">
+                            <thead class="thead-dark">
+                                <tr class="table-header">
+                                    <th>Nome</th>
+                                    <th>Validade</th>
+                                    <th>Quantidade</th>
+                                    <th>Preço Unitário</th>
+                                    <th>Marca</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div style="border-style: solid;">
+                            Legendas: <span style="background-color: rgba(228, 59, 59, 0.685);">Produto vencido e com baixo estoque</span> | <span style="background-color: orange;">Produto vencido</span> | <span style="background-color: yellow;"> Produto com baixa quantidade</span>
                         </div>
                     </div>
                 </div>
+                <div id="gastos" style="display: none;">
+                    <div id="econ-table" style="border-style: solid;"></div>
+                </div>
+                <div id="reposicao" style="display: none;">
+                    <table class="table" id="reposition-table">
+                        <thead class="thead-dark">
+                            <tr class="table-header">
+                                <th>Nome</th>
+                                <th>Validade</th>
+                                <th>Quantidade</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id="categorias" style="display: none;">
+                    <table class="table" id="detail-table">
+                        <thead class="thead-dark">
+                            <tr class="table-header">
+                                <th>Nome</th>
+                                <th>Validade</th>
+                                <th>Quantidade</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 
     <script src="funcoes.js"></script>
     </body>

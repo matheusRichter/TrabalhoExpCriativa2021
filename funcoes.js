@@ -156,11 +156,9 @@ function mostrarGasto(mostrar=0) {
 
     let valEcon = calcularEconomiaPrevisao(gasto);
     economia.innerText = 'Economia na próxima compra:\nR$' + valEcon;
-    economia.style.backgroundColor = "lightgreen";
 
     let prevGasto = calcularEconomiaPrevisao();
     previsao.innerText = 'Gasto na próxima compra:\nR$' + prevGasto;
-    previsao.style.backgroundColor = "orange";
 }
 
 function calcularEconomiaPrevisao(gastoTotal = 0) {
@@ -258,6 +256,10 @@ function listarCategoria(id) {
     reposicao.style.display = 'none';
     dashboard.style.display = 'none';
     categorias.style.display = 'block';
+}
+
+function mostrarValor(id) {
+
 }
 
 function limparCategoria() {
