@@ -80,7 +80,7 @@ form.addEventListener(
     "submit",
     function(event) {
         cadastrar(form);
-        atualizarDash();
+        // atualizarDash();
         event.preventDefault();
     }
 );
@@ -142,7 +142,7 @@ function calcularGasto() {
     for (let produto in produtos) {
         total += parseFloat(produtos[produto].Preco) * parseInt(produtos[produto].Quantidade);
     }
-    return total;
+    return total.toFixed(2);
 }
 
 function mostrarGasto(mostrar=0) {
@@ -157,13 +157,13 @@ function mostrarGasto(mostrar=0) {
     }
 
     let gasto = calcularGasto();
-    gastoTotal.innerText = gasto == undefined ? 'Você não possui histórico.' : 'Gasto total:\nR$' + gasto;
+    // gastoTotal.innerText = gasto == undefined ? 'Você não possui histórico.' : 'Gasto total:\nR$' + gasto;
 
-    let valEcon = calcularEconomiaPrevisao(gasto);
-    economia.innerText = 'Economia na próxima compra:\nR$' + valEcon;
+    // let valEcon = calcularEconomiaPrevisao(gasto);
+    // economia.innerText = 'Economia na próxima compra:\nR$' + valEcon;
 
-    let prevGasto = calcularEconomiaPrevisao();
-    previsao.innerText = 'Gasto na próxima compra:\nR$' + prevGasto;
+    // let prevGasto = calcularEconomiaPrevisao();
+    // previsao.innerText = 'Gasto na próxima compra:\nR$' + prevGasto;
 }
 
 function calcularEconomiaPrevisao(gastoTotal = 0) {
@@ -218,18 +218,18 @@ function mostrarValor(id) {
         break;
         case 3:
             modalTitle.innerText = "Gasto na próxima compra";
-            valor.innerText = "R$ " + calcularGasto();
+            valor.innerText = "R$ " + calcularEconomiaPrevisao();
         break;
     }
 }
 
-function atualizarDash(){
-    listarReposicoes();
+// function atualizarDash(){
+//     listarReposicoes();
 
-    dashFalta.innerText = 'Baixo estoque: \n' + baixoEstoque;
-    dashVencidos.innerText = 'Vencidos: \n' + vencidos;
-    dashFaltaVencido.innerText = 'Vencidos e com Baixo estoque: \n' + pouco_e_vencido;
-}
+//     dashFalta.innerText = 'Baixo estoque: \n' + baixoEstoque;
+//     dashVencidos.innerText = 'Vencidos: \n' + vencidos;
+//     dashFaltaVencido.innerText = 'Vencidos e com Baixo estoque: \n' + pouco_e_vencido;
+// }
 
 function listarCategoria(id) {
     listarReposicoes();

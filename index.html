@@ -11,6 +11,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <!--    <script src="aulas.js"></script>-->
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
     <body style="text-align: center;">
@@ -21,7 +22,7 @@
             <div class="col-md-3 side-bar">
                 <br>
                 <div id="vencidos" onclick="listarCategoria(1)" class="side-button">Produtos Vencidos</div><br>
-                <div id="emFalta" onclick="listarCategoria(2)" class="side-button">Produtos com caixo estoque</div><br>
+                <div id="emFalta" onclick="listarCategoria(2)" class="side-button">Produtos com baixo estoque</div><br>
                 <div id="vencidosBaixoEstoque" onclick="listarCategoria(3)" class="side-button">Produtos vencidos e com baixo estoque</div><br>
                 <div id="gastoTotal" class="side-button" onclick="mostrarValor(1);">Gasto Total</div><br>
                 <div id="economia" class="side-button" onclick="mostrarValor(2);"> Economia na próxima compra</div><br>
@@ -37,22 +38,22 @@
                     <h1 id="modal-title">Cadastro de Produto</h1><br/>
                     <form id="form-cadastro">
                         <label>Nome do produto: </label>
-                        <input type="text" id="nome" size="20" required value="Teste"><br/>
+                        <input type="text" id="nome" size="30" required value="Teste"><br/>
     
                         <label>Categoria do produto: </label>
-                        <input type="text" id="categoria" size="20" required value="Teste"><br/>
+                        <input type="text" id="categoria" size="27" required value="Teste"><br/>
     
                         <label>Marca do produto: </label>
-                        <input type="text" id="marca" size="20" required value="Teste"><br/>
+                        <input type="text" id="marca" size="30.99" required value="Teste"><br/>
     
                         <label>Preço do produto: </label>
-                        <input type="number" step="0.01" id="preco" size="20" required value="10.5"><br/>
+                        <input type="number" step="0.01" id="preco" required value="10.5" style="width: 257px;"><br/>
     
                         <label>Validade do produto: </label>
-                        <input type="date" id="validade" size="20" required value="2021-05-29"><br/>
+                        <input type="date" id="validade" required value="2021-07-31" style="width: 239px;"><br/>
     
                         <label>Quantidade do produto: </label>
-                        <input type="number" id="quantidade" size="20" required value="5"><br/>
+                        <input type="number" id="quantidade" required value="5" style="width: 220px;"><br/>
     
                         <hr>
     
@@ -72,8 +73,8 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div style="border-style: solid;">
-                            Legendas: <span style="background-color: rgba(228, 59, 59, 0.685);">Produto vencido e com baixo estoque</span> | <span style="background-color: orange;">Produto vencido</span> | <span style="background-color: yellow;"> Produto com baixa quantidade</span>
+                        <div style="border-style: solid; background-color: rgba(100, 100, 100, 0.7);">
+                            Legendas: <i class="fa fa-square" style="color: rgba(228, 59, 59, 0.685);"></i><span style="color: rgba(228, 59, 59, 0.685);"> Produto vencido e com baixo estoque</span> | <i class="fa fa-square" style="color: orange;"></i><span style="color: orange;"> Produto vencido</span> | <i class="fa fa-square" style="color: yellow"></i><span style="color: yellow;"> Produto com baixa quantidade</span>
                         </div>
                     </div>
                 </div>
